@@ -1,7 +1,144 @@
 <!DOCTYPE html>
-<html>
-<head><title>My Game</title></head>
-<body><h1>Welcome to airplaneAPK</h1></body>
-<p><a href="https://sites.google.com/view/airplane1/">Admob隐私权政策网址</a></p>
-  
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Air Battle · 飞机大战</title>
+<style>
+  :root {
+    --bg: #0b1526;
+    --panel: #122238;
+    --text: #e8eef7;
+    --muted: #9db2cc;
+    --accent: #4fc3f7;
+    --accent2: #ffd54f;
+    --line: #22364f;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+    line-height: 1.7;
+  }
+  .wrap { max-width: 860px; margin: 0 auto; padding: 24px 20px 60px; }
+  header { text-align: center; padding: 48px 0 36px; }
+  .logo { font-size: 56px; line-height: 1; }
+  h1 { font-size: 34px; margin: 12px 0 6px; letter-spacing: 1px; }
+  .tagline { color: var(--muted); font-size: 16px; }
+  .lang-switch { position: fixed; top: 14px; right: 14px; z-index: 10; }
+  .lang-switch button {
+    background: var(--panel); color: var(--text);
+    border: 1px solid var(--line); border-radius: 6px;
+    padding: 6px 14px; margin-left: 6px; cursor: pointer; font-size: 13px;
+  }
+  .lang-switch button.active { background: var(--accent); color: #06263a; border-color: var(--accent); font-weight: 600; }
+  section {
+    background: var(--panel); border: 1px solid var(--line);
+    border-radius: 12px; padding: 28px 30px; margin-top: 22px;
+  }
+  h2 { font-size: 20px; color: var(--accent); margin-bottom: 14px; }
+  h3 { font-size: 16px; color: var(--accent2); margin: 18px 0 8px; }
+  p, li { color: var(--muted); font-size: 15px; }
+  ul { padding-left: 22px; }
+  li { margin: 4px 0; }
+  .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; }
+  .feature { background: var(--bg); border: 1px solid var(--line); border-radius: 10px; padding: 16px; }
+  .feature .icon { font-size: 26px; }
+  .feature b { display: block; color: var(--text); margin: 6px 0 4px; }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .contact { color: var(--accent2); }
+  footer { text-align: center; color: var(--muted); font-size: 13px; margin-top: 36px; }
+</style>
+</head>
+<body>
+<div class="lang-switch">
+  <button id="btn-zh" class="active" onclick="setLang('zh')">中文</button>
+  <button id="btn-en" onclick="setLang('en')">English</button>
+</div>
+
+<div class="wrap">
+  <header>
+    <div class="logo">✈️</div>
+    <h1>Air Battle · 飞机大战</h1>
+    <div class="tagline" data-zh="经典飞机棋类策略对战游戏" data-en="A classic airplane grid strategy battle game">经典飞机棋类策略对战游戏</div>
+  </header>
+
+  <section>
+    <h2 data-zh="游戏简介" data-en="About the Game">游戏简介</h2>
+    <p data-zh="Air Battle 是一款经典棋盘式飞机对战手游：在网格棋盘上隐藏部署你的机队，通过开火定位并击毁对手的飞机机头。支持人机对战、网络对战、练习模式、残局挑战等多种玩法，从 10×10 到 20×20 多种棋盘规格任你选择。"
+       data-en="Air Battle is a classic grid-based airplane battle game: hide your fleet on the board, locate and destroy enemy aircraft heads by firing. Enjoy AI battles, online matches, practice mode and endgame puzzles, with board sizes from 10×10 up to 20×20.">
+      Air Battle 是一款经典棋盘式飞机对战手游：在网格棋盘上隐藏部署你的机队，通过开火定位并击毁对手的飞机机头。支持人机对战、网络对战、练习模式、残局挑战等多种玩法，从 10×10 到 20×20 多种棋盘规格任你选择。
+    </p>
+  </section>
+
+  <section>
+    <h2 data-zh="玩法特色" data-en="Features">玩法特色</h2>
+    <div class="features">
+      <div class="feature"><span class="icon">🤖</span><b data-zh="人机对战" data-en="AI Battle">人机对战</b><span data-zh="三档难度 AI 任意挑战" data-en="Three AI difficulty levels">三档难度 AI 任意挑战</span></div>
+      <div class="feature"><span class="icon">🌐</span><b data-zh="网络对战" data-en="Online Battle">网络对战</b><span data-zh="与好友或玩家实时对战" data-en="Real-time matches with friends">与好友或玩家实时对战</span></div>
+      <div class="feature"><span class="icon">🎯</span><b data-zh="练习模式" data-en="Practice Mode">练习模式</b><span data-zh="评级与连击，精进你的战术" data-en="Ratings & combos to sharpen tactics">评级与连击，精进你的战术</span></div>
+      <div class="feature"><span class="icon">🧩</span><b data-zh="残局挑战" data-en="Endgame Puzzles">残局挑战</b><span data-zh="10 个关卡，限弹通关" data-en="10 levels with limited ammo">10 个关卡，限弹通关</span></div>
+    </div>
+  </section>
+
+  <section id="privacy">
+    <h2 data-zh="隐私政策" data-en="Privacy Policy">隐私政策</h2>
+    <p data-zh="我们非常重视你的隐私。本政策说明 Air Battle 如何处理你的数据。"
+       data-en="Your privacy matters to us. This policy explains how Air Battle handles your data.">
+      我们非常重视你的隐私。本政策说明 Air Battle 如何处理你的数据。</p>
+
+    <h3 data-zh="1. 我们收集的数据" data-en="1. Data We Collect">1. 我们收集的数据</h3>
+    <ul>
+      <li data-zh="游戏进度与设置：仅存储在你的设备本地（localStorage），不会上传到服务器。"
+          data-en="Game progress & settings: stored locally on your device (localStorage) only, never uploaded to a server.">游戏进度与设置：仅存储在你的设备本地（localStorage），不会上传到服务器。</li>
+      <li data-zh="广告数据：当您观看广告时，我们的广告合作伙伴（Google AdMob）会收集广告 ID 与设备信息用于投放广告。"
+          data-en="Advertising data: when you view ads, our ad partner (Google AdMob) collects advertising ID and device information to serve ads.">广告数据：当您观看广告时，我们的广告合作伙伴（Google AdMob）会收集广告 ID 与设备信息用于投放广告。</li>
+      <li data-zh="网络对战：对战过程中产生的临时连接数据（用于匹配与同步），对局结束后不再保留。"
+          data-en="Online battles: temporary connection data for matchmaking and sync, not retained after the match.">网络对战：对战过程中产生的临时连接数据（用于匹配与同步），对局结束后不再保留。</li>
+    </ul>
+
+    <h3 data-zh="2. 广告与个性化" data-en="2. Ads & Personalization">2. 广告与个性化</h3>
+    <ul>
+      <li data-zh="本应用使用 Google AdMob 展示广告。在欧洲经济区（EEA）和英国，我们通过 Google UMP 征得你的同意后才展示个性化广告，你可随时在应用内「设置 → 隐私选项」修改或撤回同意。"
+          data-en="This app uses Google AdMob. In the EEA and UK, personalized ads are shown only after consent via Google UMP. You can change or withdraw consent anytime in Settings → Privacy Options.">本应用使用 Google AdMob 展示广告。在欧洲经济区（EEA）和英国，我们通过 Google UMP 征得你的同意后才展示个性化广告，你可随时在应用内「设置 → 隐私选项」修改或撤回同意。</li>
+      <li data-zh="你可以通过 Google 广告设置管理个性化广告：https://adssettings.google.com"
+          data-en="Manage personalized ads via Google Ads Settings: https://adssettings.google.com">你可以通过 Google 广告设置管理个性化广告：https://adssettings.google.com</li>
+    </ul>
+
+    <h3 data-zh="3. 儿童隐私" data-en="3. Children's Privacy">3. 儿童隐私</h3>
+    <p data-zh="本应用不面向 13 岁以下儿童，我们不会有意收集儿童的个人信息。"
+       data-en="This app is not directed to children under 13, and we do not knowingly collect personal information from children.">本应用不面向 13 岁以下儿童，我们不会有意收集儿童的个人信息。</p>
+
+    <h3 data-zh="4. 政策更新" data-en="4. Policy Updates">4. 政策更新</h3>
+    <p data-zh="本政策如有更新，将在本页面发布并更新生效日期。继续使用本应用即视为接受更新后的政策。"
+       data-en="Updates to this policy will be posted on this page. Continued use of the app constitutes acceptance of the updated policy.">本政策如有更新，将在本页面发布并更新生效日期。继续使用本应用即视为接受更新后的政策。</p>
+
+    <h3 data-zh="5. 联系我们" data-en="5. Contact Us">5. 联系我们</h3>
+    <p data-zh="如对本政策有任何疑问，请联系：" data-en="If you have any questions about this policy, contact us at:">如对本政策有任何疑问，请联系：</p>
+    <p class="contact">guanwei99999@example.com</p>
+    <p style="font-size:13px; margin-top:10px;" data-zh="生效日期：2026-09-20" data-en="Effective date: 2026-09-20">生效日期：2026-09-20</p>
+  </section>
+
+  <footer>Air Battle · © 2026 · <a href="https://guanwei99999.github.io/app-ads.txt">app-ads.txt</a></footer>
+</div>
+
+<script>
+function setLang(lang) {
+  document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+  document.querySelectorAll('[data-zh]').forEach(function (el) {
+    el.textContent = el.getAttribute('data-' + lang);
+  });
+  document.getElementById('btn-zh').classList.toggle('active', lang === 'zh');
+  document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+  try { localStorage.setItem('siteLang', lang); } catch (e) {}
+}
+(function () {
+  var lang = 'zh';
+  try { lang = localStorage.getItem('siteLang') || 'zh'; } catch (e) {}
+  if (lang !== 'zh') setLang('en');
+})();
+</script>
+</body>
 </html>
