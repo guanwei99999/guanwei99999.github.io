@@ -1,19 +1,2 @@
-# app-ads.txt —— AdMob 广告来源授权声明
-#
-# 部署位置（三个条件必须同时满足，否则 AdMob 抓不到）：
-#   1. 放到与应用商店（Google Play / App Store）里填写的「开发者网站」同域名的**根目录**
-#      例：开发者网站 = https://example.com  →  必须能打开 https://example.com/app-ads.txt
-#   2. 必须用 **https**（部分抓取器不接受 http）
-#   3. 路径必须是 /app-ads.txt，不是 /ads.txt，也不能带子目录
-#
-# 下一行中的 pub-XXXXXXXXXXXXXXXX 必须替换成你 AdMob 账号的发布商 ID：
-#   AdMob 后台 → 设置 → 账号 → 发布商 ID（形如 pub-1234567890123456）
-# 未替换 = 该行无效，等于没提交。
-#
-# 文件生效周期较长：提交后通常 24 小时至数天，AdMob 后台
-# 「应用 → app-ads.txt」状态才会从「未找到」变为「已授权」。
-# 只有显示「已授权」，程序化广告需求方才会给你出高价（未授权会显著压低 eCPM）。
-#
-# 校验工具：https://adstxt.guru/  或  https://support.google.com/admob/answer/9363762
-
+# app-ads.txt
 google.com, pub-6936378168921456, DIRECT, f08c47fec0942fa0
