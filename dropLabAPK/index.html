@@ -1,1 +1,289 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Drop Lab · 掉落实验室</title>
+<meta name="description" content="Drop Lab —— 万物皆可投入的物理化学反应模拟小游戏。四容器世界、AI 兜底反应、图鉴收集。">
+<style>
+  :root {
+    --bg: #0f0d14;
+    --panel: #191421;
+    --panel2: #120f19;
+    --text: #f0eaf5;
+    --muted: #a89bb8;
+    --accent: #ff6b35;
+    --accent2: #ffc94f;
+    --accent3: #7ee0d0;
+    --line: #2e2438;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: "Segoe UI", "PingFang SC", "Hiragino Sans", "Microsoft YaHei", sans-serif;
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 24px 20px 60px; }
 
+  header { text-align: center; padding: 46px 0 30px; }
+  .logo {
+    font-size: 58px; line-height: 1;
+    filter: drop-shadow(0 0 18px rgba(255,107,53,.45));
+  }
+  h1 { font-size: 34px; margin: 14px 0 8px; letter-spacing: .5px; }
+  h1 span { color: var(--accent); }
+  .tagline { color: var(--muted); font-size: 15px; }
+
+  .lang-switch { position: fixed; top: 14px; right: 14px; z-index: 10; }
+  .lang-switch button {
+    background: var(--panel); color: var(--text);
+    border: 1px solid var(--line); border-radius: 6px;
+    padding: 6px 13px; margin-left: 6px; cursor: pointer; font-size: 13px;
+    transition: .15s;
+  }
+  .lang-switch button:hover { border-color: var(--accent); }
+  .lang-switch button.active {
+    background: var(--accent); color: #2a1206;
+    border-color: var(--accent); font-weight: 600;
+  }
+
+  section {
+    background: var(--panel); border: 1px solid var(--line);
+    border-radius: 14px; padding: 26px 28px; margin-top: 20px;
+  }
+  h2 { font-size: 19px; color: var(--accent); margin-bottom: 14px; letter-spacing: .3px; }
+  h3 { font-size: 15px; color: var(--accent2); margin: 20px 0 8px; }
+  p { color: var(--muted); font-size: 15px; }
+  p + p { margin-top: 10px; }
+  ul { padding-left: 20px; margin-top: 6px; }
+  li { color: var(--muted); font-size: 15px; margin: 6px 0; }
+  b { color: var(--text); }
+  a { color: var(--accent3); text-decoration: none; word-break: break-all; }
+  a:hover { text-decoration: underline; }
+
+  .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(238px, 1fr)); gap: 12px; }
+  .feature {
+    background: var(--panel2); border: 1px solid var(--line);
+    border-radius: 10px; padding: 15px 16px;
+  }
+  .feature .icon { font-size: 24px; line-height: 1; }
+  .feature b { display: block; margin: 8px 0 4px; font-size: 14px; }
+  .feature span { color: var(--muted); font-size: 13.5px; line-height: 1.6; }
+
+  .plans { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-top: 4px; }
+  .plan {
+    background: var(--panel2); border: 1px solid var(--line);
+    border-radius: 10px; padding: 16px; text-align: center;
+  }
+  .plan b { display: block; font-size: 15px; margin-bottom: 4px; }
+  .plan span { font-size: 13px; color: var(--muted); }
+  .plan.hot { border-color: var(--accent); box-shadow: 0 0 0 1px rgba(255,107,53,.25) inset; }
+
+  .contact { color: var(--accent2); font-size: 15px; }
+  .meta { color: var(--line); font-size: 12.5px; margin-top: 10px; color: #6f6280; }
+
+  footer {
+    text-align: center; color: #6f6280; font-size: 12.5px;
+    margin-top: 34px; line-height: 2;
+  }
+  footer a { color: #8d7fa0; }
+
+  @media (max-width: 480px) {
+    h1 { font-size: 27px; }
+    .logo { font-size: 46px; }
+    section { padding: 22px 18px; }
+    .lang-switch { top: 8px; right: 8px; }
+    .lang-switch button { padding: 5px 9px; font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="lang-switch">
+  <button id="btn-zh" class="active" onclick="setLang('zh')">中文</button>
+  <button id="btn-en" onclick="setLang('en')">English</button>
+  <button id="btn-ja" onclick="setLang('ja')">日本語</button>
+</div>
+
+<div class="wrap">
+
+  <header>
+    <div class="logo">🧪</div>
+    <h1>Drop <span>Lab</span></h1>
+    <div class="tagline"
+         data-zh="万物皆可投入的物理化学反应模拟"
+         data-en="A physics-chemical sandbox where everything can be dropped in"
+         data-ja="何でも投入できる物理化学反応シミュレーター">万物皆可投入的物理化学反应模拟</div>
+  </header>
+
+  <section>
+    <h2 data-zh="游戏简介" data-en="About the Game" data-ja="ゲーム紹介">游戏简介</h2>
+    <p data-zh="Drop Lab 是一款「万物皆可投入」的物理化学反应模拟小游戏。把香蕉扔进火山、把电池丢进梦境、把 UFO 放进代码世界 —— 每一次投放都会触发一场物理模拟与化学反应，生成意想不到的新物品。"
+       data-en="Drop Lab is a physics-chemical sandbox where everything can be dropped in. Throw a banana into a volcano, a battery into a dream, a UFO into the code world — every drop triggers a physics simulation and a chemical reaction that produces something unexpected."
+       data-ja="Drop Lab は「何でも投入できる」物理化学反応シミュレーターです。バナナを火山へ、電池を夢の中へ、UFO をコードの世界へ投げ込むと、物理シミュレーションと化学反応が起こり、思いもよらない新しいアイテムが生まれます。">Drop Lab 是一款「万物皆可投入」的物理化学反应模拟小游戏。把香蕉扔进火山、把电池丢进梦境、把 UFO 放进代码世界 —— 每一次投放都会触发一场物理模拟与化学反应，生成意想不到的新物品。</p>
+    <p data-zh="内置数据驱动的反应引擎，预置组合之外还有 AI 现场生成结果。没有「正确玩法」，只有你想不想扔。"
+       data-en="A data-driven reaction engine handles preset combinations, while AI generates results for anything unforeseen. There is no correct way to play — only whether you feel like dropping it."
+       data-ja="データ駆動の反応エンジンがプリセットの組み合わせを処理し、想定外の組み合わせは AI がその場で生成します。「正しい遊び方」はなく、投げたいかどうかだけがあります。">内置数据驱动的反应引擎，预置组合之外还有 AI 现场生成结果。没有「正确玩法」，只有你想不想扔。</p>
+  </section>
+
+  <section>
+    <h2 data-zh="玩法特色" data-en="Features" data-ja="特徴">玩法特色</h2>
+    <div class="features">
+      <div class="feature">
+        <span class="icon">🌋</span>
+        <b data-zh="四容器世界" data-en="Four Container Worlds" data-ja="4つの容器ワールド">四容器世界</b>
+        <span data-zh="火山 / 梦境 / 二维世界 / 代码世界，各有独立物理与专属音效"
+              data-en="Volcano, Dream, Flat-2D and Code World — each with its own physics and sound set"
+              data-ja="火山・夢・二次元・コードの世界。それぞれ独自の物理と専用サウンド">火山 / 梦境 / 二维世界 / 代码世界，各有独立物理与专属音效</span>
+      </div>
+      <div class="feature">
+        <span class="icon">⚗️</span>
+        <b data-zh="万物皆可投入" data-en="Drop Anything" data-ja="何でも投入">万物皆可投入</b>
+        <span data-zh="任意物品互相投放即触发反应，四级匹配引擎决定结果"
+              data-en="Drop any two items together to trigger a reaction, resolved by a four-tier matching engine"
+              data-ja="どんな組み合わせでも反応が発生。4段階のマッチングエンジンが結果を決定">任意物品互相投放即触发反应，四级匹配引擎决定结果</span>
+      </div>
+      <div class="feature">
+        <span class="icon">📖</span>
+        <b data-zh="图鉴收集" data-en="Discovery Codex" data-ja="図鑑コレクション">图鉴收集</b>
+        <span data-zh="按环境记录发现进度，每次新组合都会点亮一格"
+              data-en="Progress tracked per environment; every new combination lights up a slot"
+              data-ja="環境ごとに発見状況を記録。新しい組み合わせごとに1マス点灯">按环境记录发现进度，每次新组合都会点亮一格</span>
+      </div>
+      <div class="feature">
+        <span class="icon">🤖</span>
+        <b data-zh="AI 现编反应" data-en="AI-Generated Reactions" data-ja="AI生成の反応">AI 现编反应</b>
+        <span data-zh="没预置过的组合？AI 现场给你编一个合理又有梗的结果"
+              data-en="No preset for that combo? AI improvises a result that is both plausible and funny"
+              data-ja="プリセットにない組み合わせも、AI がその場で納得感とユーモアのある結果を生成">没预置过的组合？AI 现场给你编一个合理又有梗的结果</span>
+      </div>
+      <div class="feature">
+        <span class="icon">✨</span>
+        <b data-zh="粒子与音效" data-en="Particles & Sound" data-ja="パーティクルとサウンド">粒子与音效</b>
+        <span data-zh="自研粒子特效、屏幕震动、熔岩渐变配色，30 段合成音效"
+              data-en="Custom particle effects, screen shake, lava colour shifts and 30 synthesized sounds"
+              data-ja="独自のパーティクル演出、画面振動、溶岩グラデーション、30種の合成サウンド">自研粒子特效、屏幕震动、熔岩渐变配色，30 段合成音效</span>
+      </div>
+      <div class="feature">
+        <span class="icon">🌏</span>
+        <b data-zh="三语支持" data-en="Three Languages" data-ja="3言語対応">三语支持</b>
+        <span data-zh="中文 / English / 日本語，首次启动自动跟随系统语言"
+              data-en="Chinese, English and Japanese — auto-detected from your system on first launch"
+              data-ja="中国語・英語・日本語。初回起動時は端末の言語に自動追従">中文 / English / 日本語，首次启动自动跟随系统语言</span>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2 data-zh="会员" data-en="Membership" data-ja="メンバーシップ">会员</h2>
+    <p data-zh="核心玩法永久免费。想要更多自由度的玩家可选择会员，解锁无限自定义物品输入、完整彩蛋与高清粒子效果。"
+       data-en="The core game is free forever. Players who want more freedom can join the membership to unlock unlimited custom item input, the full set of easter eggs and high-definition particles."
+       data-ja="コアの遊びは永久無料。もっと自由に遊びたい方は、無制限のカスタムアイテム入力・全イースターエッグ・高精細パーティクルが使えるメンバーシップをご利用いただけます。">核心玩法永久免费。想要更多自由度的玩家可选择会员，解锁无限自定义物品输入、完整彩蛋与高清粒子效果。</p>
+    <div class="plans">
+      <div class="plan">
+        <b data-zh="月度" data-en="Monthly" data-ja="月額">月度</b>
+        <span data-zh="按月续订" data-en="Billed monthly" data-ja="毎月更新">按月续订</span>
+      </div>
+      <div class="plan hot">
+        <b data-zh="年度" data-en="Yearly" data-ja="年額">年度</b>
+        <span data-zh="最受欢迎" data-en="Most popular" data-ja="一番人気">最受欢迎</span>
+      </div>
+      <div class="plan">
+        <b data-zh="终身" data-en="Lifetime" data-ja="買い切り">终身</b>
+        <span data-zh="一次买断" data-en="One-time purchase" data-ja="一度の購入">一次买断</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="privacy">
+    <h2 data-zh="隐私政策" data-en="Privacy Policy" data-ja="プライバシーポリシー">隐私政策</h2>
+    <p data-zh="我们重视你的隐私。本政策说明 Drop Lab 如何处理你的数据。"
+       data-en="Your privacy matters to us. This policy explains how Drop Lab handles your data."
+       data-ja="私たちはあなたのプライバシーを重視します。本ポリシーは Drop Lab がデータをどう扱うかを説明します。">我们重视你的隐私。本政策说明 Drop Lab 如何处理你的数据。</p>
+
+    <h3 data-zh="1. 我们收集的数据" data-en="1. Data We Collect" data-ja="1. 収集するデータ">1. 我们收集的数据</h3>
+    <ul>
+      <li data-zh="游戏进度与设置：图鉴发现记录、音效开关、语言偏好等仅保存在你的设备本地，不会上传到服务器。"
+          data-en="Game progress & settings: codex discoveries, sound toggles and language preference are stored locally on your device only, never uploaded."
+          data-ja="ゲーム進行と設定：図鑑の発見記録、サウンド設定、言語設定などは端末内にのみ保存され、サーバーへは送信されません。">游戏进度与设置：图鉴发现记录、音效开关、语言偏好等仅保存在你的设备本地，不会上传到服务器。</li>
+      <li data-zh="广告数据：观看广告时，广告合作伙伴（Google AdMob）会收集广告 ID 与设备信息用于投放与统计。"
+          data-en="Advertising data: when you view ads, our ad partner (Google AdMob) collects advertising ID and device information for delivery and measurement."
+          data-ja="広告データ：広告表示時、広告パートナー（Google AdMob）が配信と計測のために広告 ID と端末情報を収集します。">广告数据：观看广告时，广告合作伙伴（Google AdMob）会收集广告 ID 与设备信息用于投放与统计。</li>
+      <li data-zh="购买数据：内购由 Google Play / App Store 处理，我们不接触你的支付信息；订阅状态会以匿名购买凭证形式传至我们的服务器校验有效性。"
+          data-en="Purchase data: in-app purchases are handled by Google Play / App Store; we never see your payment details. Subscription status is verified on our server using an anonymous purchase token."
+          data-ja="購入データ：アプリ内課金は Google Play / App Store が処理し、当方は支払い情報を取得しません。サブスクリプションの状態は匿名の購入トークンでサーバー検証されます。">购买数据：内购由 Google Play / App Store 处理，我们不接触你的支付信息；订阅状态会以匿名购买凭证形式传至我们的服务器校验有效性。</li>
+    </ul>
+
+    <h3 data-zh="2. AI 生成功能" data-en="2. AI-Generated Content" data-ja="2. AI 生成機能">2. AI 生成功能</h3>
+    <p data-zh="当你使用「自定义物品」自由输入时，你输入的文字会发送到我们的后端代理，并转交给第三方 AI 模型以生成反应结果。这些文字仅用于当次生成，不用于模型训练，也不会与你的身份关联。若你不希望发送任何文字，请使用预置物品游玩 —— 核心玩法完全不需要 AI。"
+       data-en="When you use the custom item input, the text you type is sent to our backend proxy and forwarded to a third-party AI model to generate a reaction result. That text is used only for that single generation, is never used for model training, and is not linked to your identity. If you prefer not to send any text, simply play with the preset items — the core game needs no AI at all."
+       data-ja="「カスタムアイテム」の自由入力を使うと、入力したテキストは当方のバックエンドを経由して第三者 AI モデルへ送られ、反応結果が生成されます。テキストはその生成のみに使用され、モデル学習には使われず、あなたの身元とも結び付けられません。送信を望まない場合はプリセットのアイテムでお楽しみください。コアの遊びに AI は不要です。">当你使用「自定义物品」自由输入时，你输入的文字会发送到我们的后端代理，并转交给第三方 AI 模型以生成反应结果。这些文字仅用于当次生成，不用于模型训练，也不会与你的身份关联。若你不希望发送任何文字，请使用预置物品游玩 —— 核心玩法完全不需要 AI。</p>
+
+    <h3 data-zh="3. 广告与个性化" data-en="3. Ads & Personalization" data-ja="3. 広告とパーソナライズ">3. 广告与个性化</h3>
+    <ul>
+      <li data-zh="本应用使用 Google AdMob 展示横幅与激励视频广告。在欧洲经济区（EEA）与英国，我们通过 Google UMP 征得同意后才展示个性化广告。"
+          data-en="This app uses Google AdMob for banner and rewarded ads. In the EEA and UK, personalized ads are shown only after consent via Google UMP."
+          data-ja="本アプリはバナー広告とリワード広告に Google AdMob を使用します。EEA および英国では Google UMP による同意後のみパーソナライズ広告を表示します。">本应用使用 Google AdMob 展示横幅与激励视频广告。在欧洲经济区（EEA）与英国，我们通过 Google UMP 征得同意后才展示个性化广告。</li>
+      <li data-zh="你可随时在应用内设置中修改或撤回同意，也可通过 Google 广告设置管理个性化广告："
+          data-en="You can change or withdraw consent anytime in the in-app settings, or manage personalized ads via Google Ads Settings:"
+          data-ja="同意はアプリ内設定でいつでも変更・撤回できます。パーソナライズ広告は Google 広告設定でも管理できます：">你可随时在应用内设置中修改或撤回同意，也可通过 Google 广告设置管理个性化广告：</li>
+      <li><a href="https://adssettings.google.com" target="_blank" rel="noopener">https://adssettings.google.com</a></li>
+    </ul>
+
+    <h3 data-zh="4. 儿童隐私" data-en="4. Children's Privacy" data-ja="4. 児童のプライバシー">4. 儿童隐私</h3>
+    <p data-zh="本应用不面向 13 岁以下儿童，我们不会有意收集儿童的个人信息。"
+       data-en="This app is not directed to children under 13, and we do not knowingly collect personal information from children."
+       data-ja="本アプリは13歳未満の児童を対象としておらず、児童の個人情報を意図的に収集することはありません。">本应用不面向 13 岁以下儿童，我们不会有意收集儿童的个人信息。</p>
+
+    <h3 data-zh="5. 数据安全与保存期限" data-en="5. Security & Retention" data-ja="5. 安全管理と保存期間">5. 数据安全与保存期限</h3>
+    <p data-zh="本地数据随卸载应用一并删除；服务端仅在必要期限内保留匿名技术日志（用于故障排查与防滥用），到期自动清除。"
+       data-en="Local data is removed when you uninstall the app. Our servers retain anonymous technical logs only for as long as needed for troubleshooting and abuse prevention, then delete them automatically."
+       data-ja="端末内データはアプリの削除とともに消去されます。サーバー側の匿名技術ログは、障害対応と不正利用防止に必要な期間のみ保持され、その後自動的に削除されます。">本地数据随卸载应用一并删除；服务端仅在必要期限内保留匿名技术日志（用于故障排查与防滥用），到期自动清除。</p>
+
+    <h3 data-zh="6. 政策更新" data-en="6. Policy Updates" data-ja="6. ポリシーの更新">6. 政策更新</h3>
+    <p data-zh="本政策如有更新，将在本页面发布并更新生效日期。继续使用本应用即视为接受更新后的政策。"
+       data-en="Any update to this policy will be posted on this page with a new effective date. Continued use of the app constitutes acceptance of the updated policy."
+       data-ja="本ポリシーを更新する場合は本ページに掲載し、発効日を更新します。アプリの継続利用は更新後のポリシーへの同意とみなされます。">本政策如有更新，将在本页面发布并更新生效日期。继续使用本应用即视为接受更新后的政策。</p>
+
+    <h3 data-zh="7. 联系我们" data-en="7. Contact Us" data-ja="7. お問い合わせ">7. 联系我们</h3>
+    <p data-zh="如对本政策有任何疑问，请联系：" data-en="If you have any questions about this policy, contact us at:" data-ja="本ポリシーについてご質問がある場合は、下記までご連絡ください：">如对本政策有任何疑问，请联系：</p>
+    <p class="contact"><a href="mailto:guanwei99999@gmail.com">guanwei99999@gmail.com</a></p>
+    <p class="meta" data-zh="生效日期：2026-10-30" data-en="Effective date: 2026-10-30" data-ja="発効日：2026-10-30">生效日期：2026-10-30</p>
+  </section>
+
+  <footer>
+    Drop Lab · © 2026<br>
+    <a href="https://guanwei99999.github.io/app-ads.txt" target="_blank" rel="noopener">app-ads.txt</a> · <a href="#privacy" data-zh="隐私政策" data-en="Privacy Policy" data-ja="プライバシーポリシー">隐私政策</a>
+  </footer>
+
+</div>
+
+<script>
+function setLang(lang) {
+  var htmlLang = lang === 'zh' ? 'zh-CN' : (lang === 'ja' ? 'ja' : 'en');
+  document.documentElement.lang = htmlLang;
+  document.querySelectorAll('[data-zh]').forEach(function (el) {
+    var v = el.getAttribute('data-' + lang);
+    if (v) el.textContent = v;
+  });
+  ['zh', 'en', 'ja'].forEach(function (l) {
+    var b = document.getElementById('btn-' + l);
+    if (b) b.classList.toggle('active', l === lang);
+  });
+  try { localStorage.setItem('siteLang', lang); } catch (e) {}
+}
+
+(function () {
+  var lang = '';
+  try { lang = localStorage.getItem('siteLang') || ''; } catch (e) {}
+  if (!lang) {
+    var n = (navigator.language || 'en').toLowerCase();
+    lang = n.indexOf('zh') === 0 ? 'zh' : (n.indexOf('ja') === 0 ? 'ja' : 'en');
+  }
+  setLang(lang);
+})();
+</script>
+</body>
+</html>
